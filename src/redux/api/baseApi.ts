@@ -12,7 +12,8 @@ import toast from 'react-hot-toast';
 
 // Create a base query configuration with common settings
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:5000/api/v1',
+  // baseUrl: 'http://localhost:5000/api/v1',
+  baseUrl: `https://university-management-backend-nu.vercel.app/api/v1`,
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     // Retrieve the authentication token from the Redux store
@@ -43,10 +44,13 @@ const baseQueryToken: BaseQueryFn<
 
   if (result.error?.status === 401) {
     // Attempt to refresh the authentication token
-    const res = await fetch('http://localhost:5000/api/v1/auth/refresh-token', {
-      method: 'POST',
-      credentials: 'include',
-    });
+    const res = await fetch(
+      'https://university-management-backend-nu.vercel.app/api/v1/auth/refresh-token',
+      {
+        method: 'POST',
+        credentials: 'include',
+      }
+    );
 
     const data = await res.json();
 
