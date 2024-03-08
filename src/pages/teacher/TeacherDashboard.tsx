@@ -19,13 +19,13 @@ const TeacherDashboard = () => {
         <Col span={24}>
           <Title
             style={{
-              fontSize: '1.5rem',
+              fontSize: '2rem',
               fontWeight: 'bold',
               color: '#333',
               marginBottom: '1rem',
             }}
           >
-            Welcome to {user?.role} Dashboard
+            WELCOME TO {user?.role?.toUpperCase()} DASHBOARD
           </Title>
         </Col>
       </Row>
