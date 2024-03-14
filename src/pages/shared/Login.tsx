@@ -1,22 +1,27 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Button, Checkbox, Form, Typography } from 'antd';
+import { IUser, setUser } from '../../redux/features/auth/apiSlice';
 import { useLoginMutation } from '../../redux/features/auth/authApi';
 import { useAppDispatch } from '../../redux/hooks';
-import { FieldValues } from 'react-hook-form';
-import { tokenVerify } from '../../utilities/tokenVerify';
-import { IUser, setUser } from '../../redux/features/auth/apiSlice';
-import { Button, Checkbox, Form, Typography } from 'antd';
 import FormWrapper from '../../components/ui/form/FormWrapper';
+import { FieldValues } from 'react-hook-form';
 import TextInput from '../../components/ui/form/TextInput';
+import { Link, useNavigate } from 'react-router-dom';
+import { tokenVerify } from '../../utilities/tokenVerify';
 import toast from 'react-hot-toast';
 
-const Login: React.FC = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
 
+  const defaultLogin = {
+    id: 'A-0001',
+    password: 'admin001',
+  };
+
   // Handle form submission
   const onSubmit = async (data: FieldValues) => {
+    console.log('🚀 ~ onSubmit ~ data:', data);
     try {
       const userLoginInfo = {
         id: data.id,
@@ -57,41 +62,35 @@ const Login: React.FC = () => {
         {/* Title and Description */}
         <Typography.Title
           level={3}
-          style={{ color: '#374151', marginBottom: '0.5rem' }}
+          style={{ color: '#374151', marginBottom: '1rem' }}
         >
           Log in to your account
         </Typography.Title>
-        <Typography.Text
-          style={{
-            fontSize: '1rem',
-            color: '#374151',
-            marginBottom: '1rem',
-            display: 'block',
-          }}
-        >
-          Enter your credentials to access your account
-        </Typography.Text>
 
         {/* Form Container */}
-        <FormWrapper onSubmit={onSubmit}>
+        <FormWrapper onSubmit={onSubmit} defaultValues={defaultLogin}>
+          {/* User identity input */}
           <TextInput
             type="text"
             name="id"
             placeholder="User identity"
-            size="middle"
+            size="large"
           />
+
+          {/* Password input */}
           <TextInput
             type="password"
             name="password"
             placeholder="Password"
-            size="middle"
+            size="large"
           />
 
+          {/* Remember me and Forgot password */}
           <div
             style={{
               display: 'flex',
-              alignItems: 'center',
               justifyContent: 'space-between',
+              alignItems: 'center',
               marginBottom: '1rem',
             }}
           >
@@ -105,12 +104,7 @@ const Login: React.FC = () => {
 
           {/* Log in Button */}
           <Form.Item style={{ marginBottom: '1.5rem' }}>
-            <Button
-              style={{ width: '100%' }}
-              type="primary"
-              htmlType="submit"
-              size="large"
-            >
+            <Button type="primary" htmlType="submit" size="large" block>
               Sign in
             </Button>
           </Form.Item>
