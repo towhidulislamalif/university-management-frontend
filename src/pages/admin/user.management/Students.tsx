@@ -46,6 +46,13 @@ const Students: React.FC = () => {
 
   const columns: TableColumnsType<DataType> = [
     {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      fixed: 'left',
+      width: 150,
+    },
+    {
       title: 'First Name',
       dataIndex: 'firstName',
       key: 'firstName',
@@ -127,6 +134,7 @@ const Students: React.FC = () => {
   const data: DataType[] | undefined = studentData?.data?.map(
     ({
       _id,
+      id,
       name,
       gender,
       dateOfBirth,
@@ -137,6 +145,7 @@ const Students: React.FC = () => {
       academicDepartment,
     }) => ({
       key: _id,
+      id: id,
       firstName: name.firstName,
       lastName: name.lastName,
       gender: gender.charAt(0).toUpperCase() + gender.slice(1),

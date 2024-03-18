@@ -45,6 +45,13 @@ const Admins: React.FC = () => {
 
   const columns: TableColumnsType<DataType> = [
     {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      fixed: 'left',
+      width: 150,
+    },
+    {
       title: 'First Name',
       dataIndex: 'firstName',
       key: 'firstName',
@@ -98,8 +105,18 @@ const Admins: React.FC = () => {
   ];
 
   const data: DataType[] | undefined = adminData?.data?.map(
-    ({ _id, name, gender, dateOfBirth, email, contactNo, presentAddress }) => ({
+    ({
+      _id,
+      id,
+      name,
+      gender,
+      dateOfBirth,
+      email,
+      contactNo,
+      presentAddress,
+    }) => ({
       key: _id,
+      id: id,
       firstName: name.firstName,
       lastName: name.lastName,
       gender: gender.charAt(0).toUpperCase() + gender.slice(1),
