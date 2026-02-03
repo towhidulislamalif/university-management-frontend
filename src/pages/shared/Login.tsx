@@ -16,7 +16,7 @@ const Login = () => {
 
   const defaultLogin = {
     id: 'A-0001',
-    password: 'admin001',
+    password: 'admin123',
   };
 
   // Handle form submission
