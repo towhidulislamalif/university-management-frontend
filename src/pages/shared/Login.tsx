@@ -8,15 +8,36 @@ import TextInput from '../../components/ui/form/TextInput';
 import { Link, useNavigate } from 'react-router-dom';
 import { tokenVerify } from '../../utilities/tokenVerify';
 import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 const Login = () => {
   const navigate = useNavigate();
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
+  const [selectedRole, setSelectedRole] = useState<string>('admin');
 
-  const defaultLogin = {
-    id: 'A-0001',
-    password: 'admin123',
+  // Role-based credentials
+  const roleCredentials = {
+    admin: {
+      id: 'A-0001',
+      password: 'admin123',
+    },
+    faculty: {
+      id: 'F-0001',
+      password: 'faculty123',
+    },
+    student: {
+      id: '2025030001',
+      password: 'student123',
+    },
+  };
+
+  const defaultLogin =
+    roleCredentials[selectedRole as keyof typeof roleCredentials];
+
+  // Handle role button click
+  const handleRoleClick = (role: string) => {
+    setSelectedRole(role);
   };
 
   // Handle form submission
@@ -67,8 +88,106 @@ const Login = () => {
           Log in to your account
         </Typography.Title>
 
+        {/* Quick Login Demo Credentials */}
+        <div
+          style={{
+            background: '#f8fafc',
+            border: '1px solid #e2e8f0',
+            borderRadius: '12px',
+            padding: '20px',
+            marginBottom: '1.5rem',
+          }}
+        >
+          <Typography.Text
+            style={{
+              display: 'block',
+              fontSize: '13px',
+              color: '#64748b',
+              marginBottom: '12px',
+              fontWeight: 500,
+            }}
+          >
+            Try demo credentials - Click to auto-fill
+          </Typography.Text>
+          <div style={{ display: 'flex', gap: '8px', flexDirection: 'column' }}>
+            <Button
+              size="small"
+              onClick={() => handleRoleClick('admin')}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                height: 'auto',
+                padding: '10px 12px',
+                background: selectedRole === 'admin' ? '#eff6ff' : 'white',
+                border:
+                  selectedRole === 'admin'
+                    ? '2px solid #2563eb'
+                    : '1px solid #cbd5e1',
+                borderRadius: '8px',
+                cursor: 'pointer',
+              }}
+            >
+              <span style={{ fontWeight: 600, color: '#1e293b' }}>Admin</span>
+              <span style={{ fontSize: '11px', color: '#64748b' }}>
+                Full system access & management
+              </span>
+            </Button>
+            <Button
+              size="small"
+              onClick={() => handleRoleClick('faculty')}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                height: 'auto',
+                padding: '10px 12px',
+                background: selectedRole === 'faculty' ? '#eff6ff' : 'white',
+                border:
+                  selectedRole === 'faculty'
+                    ? '2px solid #2563eb'
+                    : '1px solid #cbd5e1',
+                borderRadius: '8px',
+                cursor: 'pointer',
+              }}
+            >
+              <span style={{ fontWeight: 600, color: '#1e293b' }}>Faculty</span>
+              <span style={{ fontSize: '11px', color: '#64748b' }}>
+                Manage courses & student records
+              </span>
+            </Button>
+            <Button
+              size="small"
+              onClick={() => handleRoleClick('student')}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                height: 'auto',
+                padding: '10px 12px',
+                background: selectedRole === 'student' ? '#eff6ff' : 'white',
+                border:
+                  selectedRole === 'student'
+                    ? '2px solid #2563eb'
+                    : '1px solid #cbd5e1',
+                borderRadius: '8px',
+                cursor: 'pointer',
+              }}
+            >
+              <span style={{ fontWeight: 600, color: '#1e293b' }}>Student</span>
+              <span style={{ fontSize: '11px', color: '#64748b' }}>
+                View grades & enrollment info
+              </span>
+            </Button>
+          </div>
+        </div>
+
         {/* Form Container */}
-        <FormWrapper onSubmit={onSubmit} defaultValues={defaultLogin}>
+        <FormWrapper
+          onSubmit={onSubmit}
+          defaultValues={defaultLogin}
+          key={selectedRole}
+        >
           {/* User identity input */}
           <TextInput
             type="text"
