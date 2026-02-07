@@ -24,7 +24,7 @@ const Login = () => {
     },
     faculty: {
       id: 'F-0001',
-      password: 'faculty123',
+      password: 'teacher123',
     },
     student: {
       id: '2025030001',
